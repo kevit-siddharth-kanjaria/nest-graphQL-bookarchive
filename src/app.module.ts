@@ -3,16 +3,22 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
-import { join } from 'path';
 import { BookModule } from './components/book/book.module';
 import { AuthorModule } from './components/author/author.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
     imports: [
+        ConfigModule.forRoot({
+            envFilePath: '.env',
+            isGlobal: true,
+        }),
+        MongooseModule.forRoot(`${process.env.MONGO_DB}` || 'mongodb://localhost:27017/bookarchive'),
         GraphQLModule.forRoot({
             driver: ApolloDriver,
             typePaths: ['src/components/**/*.graphql'],
-            definitions: { path: join(process.cwd(), 'src/interfaces/graphql.ts'), outputAs: 'interface' },
+            playground: true,
         }),
         BookModule,
         AuthorModule,

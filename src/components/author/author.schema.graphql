@@ -2,9 +2,19 @@ type Author {
     id: ID!
     name: String!
     age: Int!
-    langauges: [String]
+    languages: [String]
 }
 
 type Query {
     authors: [Author]
+}
+
+input AuthorDataInput {
+    name: String!
+    age: Int!
+    languages: [String]
+}
+
+type Mutation {
+    addAuthor(authorData: AuthorDataInput!): Author
 }

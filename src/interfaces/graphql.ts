@@ -11,7 +11,7 @@ export interface Author {
     id: string;
     name: string;
     age: number;
-    langauges?: Nullable<Nullable<string>[]>;
+    languages?: Nullable<Nullable<string>[]>;
 }
 
 export interface IQuery {
@@ -19,11 +19,14 @@ export interface IQuery {
     books(): Nullable<Nullable<Book>[]> | Promise<Nullable<Nullable<Book>[]>>;
 }
 
+export interface IMutation {
+    addAuthor(authorData: Author): Nullable<Author> | Promise<Nullable<Author>>;
+}
+
 export interface Book {
     id: string;
     title: string;
-    author?: Nullable<Nullable<Author>[]>;
-    price?: Nullable<number>;
+    author: Nullable<Author>[];
 }
 
 type Nullable<T> = T | null;
