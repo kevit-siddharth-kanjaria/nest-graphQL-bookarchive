@@ -2,11 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type CreatedAuthor {
+type ViewBook {
   _id: ID!
-  name: String!
-  age: Int!
-  languages: [String!]!
+  title: String!
+  author: String!
+  language: String!
+  genre: [String!]!
+  ISBN: Float!
+  length: String!
+  description: String!
 }
 
 type ViewAuthor {
@@ -17,13 +21,38 @@ type ViewAuthor {
 }
 
 type Query {
+  getBooks: [ViewBook!]!
   getAuthors: [ViewAuthor!]!
 }
 
 type Mutation {
-  createAuthor(authorData: CreateAuthor!): CreatedAuthor!
+  createBook(bookData: CreateBook!): ViewBook!
+  updateBook(updateData: UpdateBook!): ViewBook!
+  deleteBook(deleteData: UpdateBook!): ViewBook!
+  createAuthor(authorData: CreateAuthor!): ViewAuthor!
   updateAuthor(updateData: UpdateAuthor!): ViewAuthor!
   deleteAuthor(deleteData: UpdateAuthor!): ViewAuthor!
+}
+
+input CreateBook {
+  title: String!
+  author: String!
+  language: String!
+  genre: [String!]!
+  ISBN: Float!
+  length: String!
+  description: String!
+}
+
+input UpdateBook {
+  title: String
+  author: String
+  language: String
+  genre: [String!]
+  ISBN: Float
+  length: String
+  description: String
+  _id: ID!
 }
 
 input CreateAuthor {

@@ -17,7 +17,6 @@ import { ConfigModule } from '@nestjs/config';
         MongooseModule.forRoot(`${process.env.MONGO_DB}` || 'mongodb://localhost:27017/bookarchive'),
         GraphQLModule.forRoot({
             driver: ApolloDriver,
-            typePaths: ['src/components/**/*.graphql'],
             playground: true,
             autoSchemaFile: 'schema.gql',
         }),

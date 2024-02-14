@@ -6,13 +6,25 @@ export type BookDocument = HydratedDocument<Book>;
 @Schema()
 export class Book {
     @Prop({ required: true })
-    name: string;
+    title: string;
 
     @Prop({ required: true })
-    age: number;
+    author: string;
+
+    @Prop()
+    language: string;
 
     @Prop({ required: true })
-    languages: [string];
+    genre: string[];
+
+    @Prop({ required: true })
+    ISBN: number;
+
+    @Prop({ required: true })
+    length: string;
+
+    @Prop({ required: true })
+    description: string;
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);

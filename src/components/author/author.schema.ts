@@ -12,7 +12,7 @@ export class Author {
     age: number;
 
     @Prop({ required: true })
-    languages: [string];
+    languages: string[];
 }
 
 export const AuthorSchema = SchemaFactory.createForClass(Author);

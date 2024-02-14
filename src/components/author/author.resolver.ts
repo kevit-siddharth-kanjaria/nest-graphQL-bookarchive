@@ -1,8 +1,10 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { AuthorService } from './author.service';
-import { CreatedAuthor, ViewAuthor } from './author.dto';
-import { CreateAuthor, UpdateAuthor } from './author.input';
+import { CreateAuthor, UpdateAuthor, ViewAuthor } from './author.types';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/utlis/guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Resolver()
 export class AuthorResolver {
     constructor(private readonly authorService: AuthorService) {}
@@ -12,7 +14,7 @@ export class AuthorResolver {
         return this.authorService.getAuthors();
     }
 
-    @Mutation(() => CreatedAuthor)
+    @Mutation(() => ViewAuthor)
     async createAuthor(@Args('authorData') authorData: CreateAuthor) {
         return this.authorService.addAuthor(authorData);
     }
