@@ -19,6 +19,7 @@ import { ConfigModule } from '@nestjs/config';
             driver: ApolloDriver,
             typePaths: ['src/components/**/*.graphql'],
             playground: true,
+            autoSchemaFile: 'schema.gql',
         }),
         BookModule,
         AuthorModule,

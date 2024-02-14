@@ -1,0 +1,40 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CreatedAuthor {
+  _id: ID!
+  name: String!
+  age: Int!
+  languages: [String!]!
+}
+
+type ViewAuthor {
+  _id: ID!
+  name: String!
+  age: Int!
+  languages: [String!]!
+}
+
+type Query {
+  getAuthors: [ViewAuthor!]!
+}
+
+type Mutation {
+  createAuthor(authorData: CreateAuthor!): CreatedAuthor!
+  updateAuthor(updateData: UpdateAuthor!): ViewAuthor!
+  deleteAuthor(deleteData: UpdateAuthor!): ViewAuthor!
+}
+
+input CreateAuthor {
+  name: String!
+  age: Int!
+  languages: [String!]!
+}
+
+input UpdateAuthor {
+  name: String
+  age: Int
+  languages: [String!]
+  _id: ID!
+}
