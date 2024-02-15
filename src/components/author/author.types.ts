@@ -1,5 +1,4 @@
-import { Field, ID, InputType, Int, ObjectType, PartialType } from '@nestjs/graphql';
-import { Types } from 'mongoose';
+import { Field, InputType, Int, ObjectType, PartialType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateAuthor {
@@ -10,20 +9,17 @@ export class CreateAuthor {
     age: number;
 
     @Field(() => [String])
-    languages: string[];
+    languages: [string];
 }
 
 @InputType()
 export class UpdateAuthor extends PartialType(CreateAuthor) {
-    @Field(() => ID)
-    _id: Types.ObjectId;
+    @Field()
+    name: string;
 }
 
 @ObjectType()
 export class ViewAuthor {
-    @Field(() => ID)
-    _id: string;
-
     @Field()
     name: string;
 
@@ -31,5 +27,5 @@ export class ViewAuthor {
     age: number;
 
     @Field(() => [String])
-    languages: string[];
+    languages: [string];
 }

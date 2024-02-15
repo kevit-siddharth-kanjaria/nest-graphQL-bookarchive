@@ -5,8 +5,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { BookModule } from './components/book/book.module';
 import { AuthorModule } from './components/author/author.module';
-import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { DynamooseModule } from 'nestjs-dynamoose';
 
 @Module({
     imports: [
@@ -14,7 +14,13 @@ import { ConfigModule } from '@nestjs/config';
             envFilePath: '.env',
             isGlobal: true,
         }),
-        MongooseModule.forRoot(`${process.env.MONGO_DB}` || 'mongodb://localhost:27017/bookarchive'),
+        DynamooseModule.forRoot({
+            aws: {
+                accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+                region: process.env.AWS_REGION,
+            },
+        }),
         GraphQLModule.forRoot({
             driver: ApolloDriver,
             playground: true,

@@ -1,25 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { Author, AuthorDocument } from './author.schema';
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
 import { CreateAuthorDto, UpdateAuthorDto } from './author.dto';
+import { InjectModel, Model } from 'nestjs-dynamoose';
+import { Author, AuthorKey } from './author.interface';
 
 @Injectable()
 export class AuthorService {
-    constructor(@InjectModel(Author.name) private authorModel: Model<Author>) {}
+    constructor(@InjectModel('Author') private authorModel: Model<Author, AuthorKey>) {}
 
-    async addAuthor(authorData: CreateAuthorDto): Promise<AuthorDocument> {
+    async addAuthor(authorData: CreateAuthorDto) {
         return await this.authorModel.create(authorData);
     }
 
-    async updateAuthor(updateData: UpdateAuthorDto): Promise<AuthorDocument> {
-        return await this.authorModel.findOneAndUpdate({ _id: updateData._id }, updateData);
+    async updateAuthor(key: AuthorKey, updateData: UpdateAuthorDto) {
+        return await this.authorModel.update(key, updateData);
     }
 
-    async deleteAuthor(deleteData: UpdateAuthorDto): Promise<AuthorDocument> {
-        return await this.authorModel.findOneAndDelete({ _id: deleteData._id });
+    async deleteAuthor(deleteData: UpdateAuthorDto) {
+        return await this.authorModel.delete({ name: deleteData.name });
     }
-    async getAuthors(): Promise<Author[]> {
-        return await this.authorModel.find().exec();
+    async getAuthor(bookData: UpdateAuthorDto) {
+        return await this.authorModel.get({ name: bookData.name });
     }
 }

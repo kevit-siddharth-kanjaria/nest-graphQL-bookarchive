@@ -3,7 +3,6 @@
 # ------------------------------------------------------
 
 type ViewBook {
-  _id: ID!
   title: String!
   author: String!
   language: String!
@@ -14,15 +13,30 @@ type ViewBook {
 }
 
 type ViewAuthor {
-  _id: ID!
   name: String!
   age: Int!
   languages: [String!]!
 }
 
 type Query {
-  getBooks: [ViewBook!]!
-  getAuthors: [ViewAuthor!]!
+  getBooks(bookData: UpdateBook!): ViewBook!
+  getAuthor(authorData: UpdateAuthor!): ViewAuthor!
+}
+
+input UpdateBook {
+  title: String
+  author: String
+  language: String
+  genre: [String!]
+  ISBN: Float!
+  length: String
+  description: String
+}
+
+input UpdateAuthor {
+  name: String!
+  age: Int
+  languages: [String!]
 }
 
 type Mutation {
@@ -44,26 +58,8 @@ input CreateBook {
   description: String!
 }
 
-input UpdateBook {
-  title: String
-  author: String
-  language: String
-  genre: [String!]
-  ISBN: Float
-  length: String
-  description: String
-  _id: ID!
-}
-
 input CreateAuthor {
   name: String!
   age: Int!
   languages: [String!]!
-}
-
-input UpdateAuthor {
-  name: String
-  age: Int
-  languages: [String!]
-  _id: ID!
 }

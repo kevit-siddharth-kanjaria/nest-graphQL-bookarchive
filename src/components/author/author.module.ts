@@ -1,11 +1,21 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
 import { AuthorSchema } from './author.schema';
 import { AuthorResolver } from './author.resolver';
 import { AuthorService } from './author.service';
+import { DynamooseModule } from 'nestjs-dynamoose';
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: 'Author', schema: AuthorSchema }])],
+    imports: [
+        DynamooseModule.forFeature([
+            {
+                name: 'Author',
+                schema: AuthorSchema,
+                options: {
+                    tableName: 'test-exp-author',
+                },
+            },
+        ]),
+    ],
     providers: [AuthorResolver, AuthorService],
 })
 export class AuthorModule {}

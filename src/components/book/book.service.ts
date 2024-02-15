@@ -1,25 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Book, BookDocument } from './book.schema';
-import { Model } from 'mongoose';
 import { CreateBookDto, UpdateBookDto } from './book.dto';
+import { InjectModel, Item, Model } from 'nestjs-dynamoose';
+import { Book, BookKey } from './book.interface';
 
 @Injectable()
 export class BookService {
-    constructor(@InjectModel(Book.name) private bookModel: Model<Book>) {}
+    constructor(@InjectModel('Book') private bookModel: Model<Book, BookKey>) {}
 
-    async addBook(bookData: CreateBookDto): Promise<BookDocument> {
+    async addBook(bookData: CreateBookDto): Promise<Item<Book>> {
         return await this.bookModel.create(bookData);
     }
 
-    async updateBook(updateData: UpdateBookDto): Promise<BookDocument> {
-        return await this.bookModel.findOneAndUpdate({ _id: updateData._id }, updateData);
+    async updateBook(key: BookKey, updateData: UpdateBookDto): Promise<Item<Book>> {
+        return await this.bookModel.update(key, updateData);
     }
 
-    async deleteBook(deleteData: UpdateBookDto): Promise<BookDocument> {
-        return await this.bookModel.findOneAndDelete({ _id: deleteData._id });
+    async deleteBook(deleteData: UpdateBookDto): Promise<void> {
+        return await this.bookModel.delete({ ISBN: deleteData.ISBN });
     }
-    async getBooks(): Promise<Book[]> {
-        return await this.bookModel.find().exec();
+
+    async getBook(bookData: UpdateBookDto): Promise<Item<Book>> {
+        return await this.bookModel.get({ ISBN: bookData.ISBN });
     }
 }

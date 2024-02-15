@@ -1,5 +1,4 @@
-import { Field, ID, PartialType } from '@nestjs/graphql';
-import { Types } from 'mongoose';
+import { Field, PartialType } from '@nestjs/graphql';
 
 export class CreateBookDto {
     @Field()
@@ -12,7 +11,7 @@ export class CreateBookDto {
     language: string;
 
     @Field(() => [String])
-    genre: string[];
+    genre: [string];
 
     @Field(() => Number)
     ISBN: number;
@@ -25,6 +24,6 @@ export class CreateBookDto {
 }
 
 export class UpdateBookDto extends PartialType(CreateBookDto) {
-    @Field(() => ID)
-    _id: Types.ObjectId;
+    @Field(() => Number)
+    ISBN: number;
 }

@@ -1,30 +1,39 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { Schema } from 'dynamoose';
 
-export type BookDocument = HydratedDocument<Book>;
+export const BookSchema = new Schema(
+    {
+        title: {
+            type: String,
+            required: true,
+        },
 
-@Schema()
-export class Book {
-    @Prop({ required: true })
-    title: string;
+        author: {
+            type: String,
+            required: true,
+        },
 
-    @Prop({ required: true })
-    author: string;
+        language: {
+            type: String,
+        },
 
-    @Prop()
-    language: string;
+        genre: {
+            type: Array,
+            schema: [String],
+        },
 
-    @Prop({ required: true })
-    genre: string[];
+        ISBN: {
+            type: Number,
+            hashKey: true,
+            required: true,
+        },
 
-    @Prop({ required: true })
-    ISBN: number;
+        length: {
+            type: String,
+        },
 
-    @Prop({ required: true })
-    length: string;
-
-    @Prop({ required: true })
-    description: string;
-}
-
-export const BookSchema = SchemaFactory.createForClass(Book);
+        description: {
+            type: String,
+        },
+    },
+    { timestamps: true },
+);
